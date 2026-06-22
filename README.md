@@ -84,4 +84,4 @@ Hospital_Flask_Project/
 
 ## 👩‍💻 Developed By
 
-**Gujjula Ashritha Reddy** | 2401MC35 | B.Tech CSE
+**Gujjula Ashritha Reddy** | 2401MC35 | B.Tech MNC
