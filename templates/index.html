@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 70%;
+            padding: 20px;
+        }
+        .sidebar {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        h1 {
+            margin-top: 0;
+        }
+        .form-box, .patient-box {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .form-box input, .form-box select {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+        .form-box label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-box button, .patient-box form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-box button:hover {
+            background-color: #45a049;
+        }
+        .search-box {
+            margin-top: 10px;
+        }
+        .search-box input {
+            width: 70%;
+            padding: 8px;
+        }
+        .search-box button {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Hospital Management System</h2>
+    <p>Date: {{ date }}</p>
+
+    <div class="form-box">
+        <form action="/add" method="post">
+            <label>Name:</label>
+            <input type="text" name="name" required>
+            <label>Gender:</label>
+            <select name="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+            <label>Age:</label>
+            <input type="number" name="age" required>
+            <label>Health Issue:</label>
+            <input type="text" name="issue" required>
+            <label>Room Number (if admitted):</label>
+            <input type="text" name="room">
+            <label>Assigned Doctor:</label>
+            <input type="text" name="doctor" required>
+            <label>Status:</label>
+            <select name="status">
+                <option value="Waiting">Waiting</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Treated">Treated</option>
+            </select>
+            <label>Type:</label>
+            <select name="type">
+                <option value="Normal">Normal</option>
+                <option value="Emergency">Emergency</option>
+            </select>
+            <label>Total Fee:</label>
+            <input type="text" name="fee" required>
+            <label><input type="checkbox" name="advance_paid"> Advance Paid</label>
+            <label><input type="checkbox" name="total_paid"> Total Paid</label>
+            <button type="submit">Add Patient</button>
+        </form>
+    </div>
+
+    <div class="search-box">
+        <form action="/search" method="get">
+            <input type="text" name="query" placeholder="Search patient name" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <h3>Normal Patients</h3>
+    {% for patient in patients if patient.type == 'Normal' %}
+        <div class="patient-box">
+            <p><strong>Name:</strong> {{ patient.name }}</p>
+            <p><strong>Gender:</strong> {{ patient.gender }}</p>
+            <p><strong>Age:</strong> {{ patient.age }}</p>
+            <p><strong>Issue:</strong> {{ patient.issue }}</p>
+            <p><strong>Doctor:</strong> {{ patient.doctor }}</p>
+            <p><strong>Room:</strong> {{ patient.room }}</p>
+            <p><strong>Status:</strong> {{ patient.status }}</p>
+            <p><strong>Fee:</strong> {{ patient.fee }}</p>
+            <p><strong>Advance Paid:</strong> {{ 'Yes' if patient.advance_paid else 'No' }}</p>
+            <p><strong>Total Paid:</strong> {{ 'Yes' if patient.total_paid else 'No' }}</p>
+            <form action="/delete/{{ loop.index0 }}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    {% endfor %}
+
+    <h3>Emergency Patients</h3>
+    {% for patient in patients if patient.type == 'Emergency' %}
+        <div class="patient-box">
+            <p><strong>Name:</strong> {{ patient.name }}</p>
+            <p><strong>Gender:</strong> {{ patient.gender }}</p>
+            <p><strong>Age:</strong> {{ patient.age }}</p>
+            <p><strong>Issue:</strong> {{ patient.issue }}</p>
+            <p><strong>Doctor:</strong> {{ patient.doctor }}</p>
+            <p><strong>Room:</strong> {{ patient.room }}</p>
+            <p><strong>Status:</strong> {{ patient.status }}</p>
+            <p><strong>Fee:</strong> {{ patient.fee }}</p>
+            <p><strong>Advance Paid:</strong> {{ 'Yes' if patient.advance_paid else 'No' }}</p>
+            <p><strong>Total Paid:</strong> {{ 'Yes' if patient.total_paid else 'No' }}</p>
+            <form action="/delete/{{ loop.index0 }}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="sidebar">
+    <h3>Available Doctors</h3>
+    {% for doctor in doctors %}
+        <div class="form-box">
+            <p><strong>Name:</strong> {{ doctor.name }}</p>
+            <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+            <p><strong>Room:</strong> {{ doctor.room_number }}</p>
+            <p><strong>Status:</strong> {{ doctor.availability }}</p>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

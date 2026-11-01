@@ -1,0 +1,3 @@
+Name,Gender,Age,Health Issue,Room Number,Assigned Doctor,Status,Patient Type,Fee Status,Advance Paid,Total Paid
+lilly,Female,34,Accident,ICU-1,Dr. John Doe,In Treatment,Emergency,20000,False,False
+kevin,Male,25,high fever,110,Dr. John Doe,Waiting,Emergency,12000,True,False

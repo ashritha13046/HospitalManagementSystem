@@ -1,0 +1,5 @@
+name,gender,age,issue,room,doctor,status,type,fee,advance_paid,total_paid
+Amulya,Female,13,high fever,,dr.Micheal Brown,Waiting,Emergency,5000,True,False
+Ram,Male,24,high fever,,Dr.John Doe,Waiting,Normal,2000,False,False
+mahi,Male,35,high fever,,Dr.John Doe,Waiting,Emergency,"50,000",True,False
+g harshith reddy,Male,17,Food Poison,,Dr.Ram,Waiting,Emergency,"50,000",True,False
