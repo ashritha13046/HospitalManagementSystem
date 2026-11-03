@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
 import csv
 from queue import Queue, PriorityQueue
+import itertools
 
 app = Flask(__name__)
 
@@ -25,6 +26,7 @@ doctors = [
 # Initialize Queues
 normal_queue = Queue()
 emergency_queue = PriorityQueue()
+emergency_counter = itertools.count()
 
 # File to store patient data
 CSV_FILE = 'patients.csv'
@@ -41,6 +43,8 @@ def load_patients():
             reader = csv.DictReader(f)
             patients.clear()
             for row in reader:
+                row['advance_paid'] = str(row.get('advance_paid', '')).strip().lower() == 'true'
+                row['total_paid'] = str(row.get('total_paid', '')).strip().lower() == 'true'
                 patients.append(row)
     except FileNotFoundError:
         pass
@@ -88,7 +92,7 @@ def add_patient():
 
     # Add to appropriate queue
     if patient_type.lower() == 'emergency':
-        emergency_queue.put((1, patient))
+        emergency_queue.put((1, next(emergency_counter), patient))
     else:
         normal_queue.put(patient)
 
